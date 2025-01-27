@@ -1,14 +1,14 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { IoMdArrowRoundDown, IoMdArrowRoundUp } from "react-icons/io";
 
 import { Loader, Table } from "../common";
 import { useRealTimePrices } from "@/services/useRealTimePrices.service";
 import { useAssetsRequest } from "@/services/useAssetsRequest.service";
-import { IAsset } from "@/interfaces/market.interface";
+import { IAsset } from "@/interfaces/assets.interface";
 
-const MarketTable = () => {
+const AssetsTable = () => {
   const { data, isLoading, error } = useAssetsRequest();
 
   const assetIds = useMemo(() => {
@@ -77,4 +77,4 @@ const MarketTable = () => {
   return <Table columns={columns} data={data?.data || []} />;
 };
 
-export default MarketTable;
+export default memo(AssetsTable);

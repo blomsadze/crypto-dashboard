@@ -1,4 +1,4 @@
-import { IAssetResponse } from "@/interfaces/market.interface";
+import { IAssetResponse } from "@/interfaces/assets.interface";
 import { apiRequest } from "@/utils/apiRequest.util";
 import { useQuery } from "@tanstack/react-query";
 
