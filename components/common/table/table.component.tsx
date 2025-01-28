@@ -1,5 +1,5 @@
 "use client";
-import React, { JSX } from "react";
+import React, { JSX, memo } from "react";
 
 import {
   ColumnDef,
@@ -7,13 +7,14 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import classNames from "classnames";
 
 export interface TableProps<T> {
   columns: ColumnDef<T>[];
   data: T[];
 }
 
-const Table = <T,>({ columns, data }: TableProps<T>): JSX.Element => {
+const TableComponent = <T,>({ columns, data }: TableProps<T>): JSX.Element => {
   const table = useReactTable({
     data,
     columns,
@@ -21,7 +22,7 @@ const Table = <T,>({ columns, data }: TableProps<T>): JSX.Element => {
   });
 
   return (
-    <table className="w-full shadow-sm">
+    <table className={classNames("w-1/2", "table-auto")}>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
@@ -56,5 +57,7 @@ const Table = <T,>({ columns, data }: TableProps<T>): JSX.Element => {
     </table>
   );
 };
+
+const Table = memo(TableComponent) as typeof TableComponent;
 
 export { Table };

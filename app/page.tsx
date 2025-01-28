@@ -1,4 +1,4 @@
-import AssetsTable from "@/components/assets-table/assets-table.component";
+import { AssetsTable } from "@/components/dashboard";
 
 const AssetsPage = () => {
   return <AssetsTable />;
