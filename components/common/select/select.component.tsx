@@ -1,12 +1,12 @@
 "use client";
-
 import React from "react";
-import ReactSelect, {
-  Props as ReactSelectProps,
-  GroupBase,
-  SingleValue,
-} from "react-select";
+import { SingleValue } from "react-select";
 import classNames from "classnames";
+import dynamic from "next/dynamic";
+
+const ReactSelect = dynamic(() => import("react-select"), {
+  ssr: false,
+});
 
 export type TOptionType = {
   label: string;
@@ -22,16 +22,6 @@ type TSelectorProps = {
   placeholder?: string;
   options: TOptionType[];
   onChange: (newValue: SingleValue<TOptionType>) => void;
-  formatOptionLabel?: ReactSelectProps<
-    TOptionType,
-    boolean,
-    GroupBase<TOptionType>
-  >["formatOptionLabel"];
-  filterOption?: ReactSelectProps<
-    TOptionType,
-    boolean,
-    GroupBase<TOptionType>
-  >["filterOption"];
 };
 
 const Select = ({
@@ -39,10 +29,8 @@ const Select = ({
   error,
   className,
   disabled = false,
-  formatOptionLabel,
   value,
   placeholder,
-  filterOption,
   onChange,
   options,
   ...props
@@ -68,9 +56,9 @@ const Select = ({
         inputId={label}
         placeholder={placeholder}
         value={options.find((option) => option.value === value) || null}
-        onChange={(newValue) => onChange(newValue)}
-        formatOptionLabel={formatOptionLabel}
-        filterOption={filterOption}
+        onChange={(newValue: unknown) =>
+          onChange(newValue as SingleValue<TOptionType>)
+        }
         isDisabled={disabled}
         components={{ IndicatorSeparator: null }}
         options={options}

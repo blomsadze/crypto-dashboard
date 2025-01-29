@@ -17,3 +17,14 @@ export interface IAssetResponse {
   data: IAsset[];
   timestamp: number;
 }
+
+export interface IAssetHistory {
+  date: string;
+  priceUsd: string;
+  time: number;
+}
+
+export interface IAssetHistoryResponse {
+  data: IAssetHistory[];
+  timestamp: number;
+}

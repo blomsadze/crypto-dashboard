@@ -27,7 +27,7 @@ export default function RootLayout({
       >
         <Providers>
           <Header />
-          <div className="max-width px-5 lg:px-0 pt-20">{children}</div>
+          <div className="max-width px-5 lg:px-10 pt-20">{children}</div>
         </Providers>
       </body>
     </html>
