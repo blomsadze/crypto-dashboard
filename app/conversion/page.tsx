@@ -1,10 +1,13 @@
 import React from "react";
 import { ConversionForm } from "@/components/dashboard";
+import { fetchAssets } from "../actions/assets.action";
 
-const ConversionPage = () => {
+const ConversionPage = async () => {
+  const assetsData = await fetchAssets();
+
   return (
     <div>
-      <ConversionForm />
+      <ConversionForm assetsData={assetsData?.data || []} />
     </div>
   );
 };

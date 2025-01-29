@@ -1,12 +1,19 @@
 "use client";
-import React, { useMemo } from "react";
-import { Loader, Select, Input } from "@/components/common";
-
-import { useAssetsRequest } from "@/services/useAssetsRequest.service";
+import React, { FC, useMemo } from "react";
+import { Select, Input } from "@/components/common";
 import { useConversionStore } from "@/store/coversion.store";
 import { useRealTimePrices } from "@/services/useRealTimePrices.service";
+import { IAsset } from "@/interfaces/assets.interface";
+import { useAssetsStore } from "@/store/assets.store";
+import { useAssets } from "@/hooks/useAssets.hook";
 
-const ConversionForm = () => {
+type TProps = {
+  assetsData: IAsset[];
+};
+
+const ConversionForm: FC<TProps> = ({ assetsData }) => {
+  const { assetsList, assetIds } = useAssetsStore();
+
   const {
     baseCrypto,
     targetCrypto,
@@ -16,21 +23,17 @@ const ConversionForm = () => {
     setAmount,
   } = useConversionStore();
 
-  const { data, isLoading, error } = useAssetsRequest();
+  useAssets(assetsData);
 
-  const assets = useMemo(() => data?.data || [], [data]);
-
-  const realTimePrices = useRealTimePrices(
-    assets?.map((asset) => asset.id) || []
-  );
+  const realTimePrices = useRealTimePrices(assetIds);
 
   const priceMap = useMemo(() => {
-    return assets?.reduce((map, asset) => {
+    return assetsList?.reduce((map, asset) => {
       const livePrice = realTimePrices[asset.id];
       map[asset.id] = parseFloat(livePrice) || parseFloat(asset.priceUsd);
       return map;
     }, {} as Record<string, number>);
-  }, [assets, realTimePrices]);
+  }, [assetsList, realTimePrices]);
 
   const conversionResult = useMemo(() => {
     if (!priceMap || !baseCrypto || !targetCrypto) return 0;
@@ -40,24 +43,16 @@ const ConversionForm = () => {
   }, [priceMap, baseCrypto, targetCrypto, amount]);
 
   const selectOptions = useMemo(() => {
-    return assets?.map((asset) => ({
-      value: asset.id,
+    return assetsList?.map((asset) => ({
       label: `${asset.name} (${asset.symbol.toUpperCase()})`,
+      value: asset.id,
     }));
-  }, [assets]);
+  }, [assetsList]);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value);
     setAmount(value || 1);
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <div className="text-red-500">Failed to load market data.</div>;
-  }
 
   return (
     <div className="p-6">

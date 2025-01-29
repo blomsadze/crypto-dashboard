@@ -1,21 +1,24 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { IoMdArrowRoundDown, IoMdArrowRoundUp } from "react-icons/io";
 
-import { Loader, Table } from "../../common";
-import { useRealTimePrices } from "@/services/useRealTimePrices.service";
-import { useAssetsRequest } from "@/services/useAssetsRequest.service";
+import { Table } from "../../common";
 import { IAsset } from "@/interfaces/assets.interface";
+import { useAssetsStore } from "@/store/assets.store";
+import { useRealTimePrices } from "@/services/useRealTimePrices.service";
+import { useAssets } from "@/hooks/useAssets.hook";
 
-const AssetsTable = () => {
+type TProps = {
+  assetsData: IAsset[];
+};
+
+const AssetsTable: FC<TProps> = ({ assetsData }) => {
   // const [timeRange, setTimeRange] = useState<"24h" | "7d" | "30d">("24h");
 
-  const { data, isLoading, error } = useAssetsRequest();
+  const { assetsList, assetIds } = useAssetsStore();
 
-  const assetIds = useMemo(() => {
-    return data?.data.map((asset) => asset.id) || [];
-  }, [data]);
+  useAssets(assetsData);
 
   const realTimePrices = useRealTimePrices(assetIds);
 
@@ -94,18 +97,9 @@ const AssetsTable = () => {
     [realTimePrices]
   );
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  // Handle error state
-  if (error) {
-    return <div className="text-red-500">Failed to load market data.</div>;
-  }
-
   return (
     <div className="flex justify-center">
-      <Table columns={columns} data={data?.data || []} />
+      <Table columns={columns} data={assetsList} />
     </div>
   );
 };
