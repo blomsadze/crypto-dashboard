@@ -1,20 +1,24 @@
 "use client";
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 import { IoMdArrowRoundDown, IoMdArrowRoundUp } from "react-icons/io";
+import { FaChartBar } from "react-icons/fa";
 
-import { Table } from "../../common";
-import { IAsset } from "@/interfaces/assets.interface";
+import { Table, Tooltip } from "../../common";
+import { useAssets } from "@/hooks/useAssets.hook";
 import { useAssetsStore } from "@/store/assets.store";
 import { useRealTimePrices } from "@/services/useRealTimePrices.service";
-import { useAssets } from "@/hooks/useAssets.hook";
+import { IAsset } from "@/interfaces/assets.interface";
 
 type TProps = {
   assetsData: IAsset[];
 };
 
 const AssetsTable: FC<TProps> = ({ assetsData }) => {
-  // const [timeRange, setTimeRange] = useState<"24h" | "7d" | "30d">("24h");
+  const [visibleTooltipRow, setVisibleTooltipRow] = useState<number | null>(
+    null
+  );
 
   const { assetsList, assetIds } = useAssetsStore();
 
@@ -28,7 +32,7 @@ const AssetsTable: FC<TProps> = ({ assetsData }) => {
         header: "Name",
         accessorKey: "name",
         cell: (props) => (
-          <div className="flex gap-2 items-center">
+          <div className="flex lg:gap-2 lg:flex-row flex-col items-center">
             <span className="text-lg font-bold">
               {props.row.original.symbol}
             </span>
@@ -45,6 +49,7 @@ const AssetsTable: FC<TProps> = ({ assetsData }) => {
       {
         header: "Price",
         accessorKey: "price",
+        size: 200,
         cell: (props) => {
           const price =
             realTimePrices[props.row.original.id] ??
@@ -61,44 +66,38 @@ const AssetsTable: FC<TProps> = ({ assetsData }) => {
               ) : (
                 <IoMdArrowRoundDown className="text-red-500" />
               )}
-              <span className="">$ {formattedPrice}</span>
+              <span className="text-nowrap">$ {formattedPrice}</span>
             </div>
           );
         },
       },
-      // {
-      //   header: `Change (${timeRange.toUpperCase()})`,
-      //   accessorKey: `changePercent${timeRange}`,
-      //   cell: (props) => {
-      //     // Dynamically use the correct change percent based on the selected range
-      //     const changeKey =
-      //       timeRange === "24h"
-      //         ? "changePercent24Hr"
-      //         : timeRange === "7d"
-      //         ? "changePercent7D"
-      //         : "changePercent30D";
-
-      //     const changePercent = parseFloat(props.row.original[changeKey]);
-      //     const isPositive = changePercent > 0;
-
-      //     return (
-      //       <div className="flex items-center gap-2">
-      //         {isPositive ? (
-      //           <IoMdArrowRoundUp className="text-green-500" />
-      //         ) : (
-      //           <IoMdArrowRoundDown className="text-red-500" />
-      //         )}
-      //         <span>{changePercent.toFixed(2)}%</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        header: "Actions",
+        accessorKey: "id",
+        cell: ({ row }) => {
+          const rowIndex = row.index;
+          return (
+            <Tooltip
+              text="Details"
+              isVisible={visibleTooltipRow === rowIndex}
+              onShow={() => setVisibleTooltipRow(rowIndex)}
+              onHide={() => setVisibleTooltipRow(null)}
+            >
+              <Link href={`/${row?.original?.id}?timeframe=24h`}>
+                <p className="text-yellow-400">
+                  <FaChartBar />
+                </p>
+              </Link>
+            </Tooltip>
+          );
+        },
+      },
     ],
-    [realTimePrices]
+    [realTimePrices, visibleTooltipRow]
   );
 
   return (
-    <div className="flex justify-center">
+    <div className="flex w-full justify-center">
       <Table columns={columns} data={assetsList} />
     </div>
   );

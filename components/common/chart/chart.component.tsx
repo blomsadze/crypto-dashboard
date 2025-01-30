@@ -22,24 +22,31 @@ ChartJS.register(
 );
 
 type TProps = {
-  label: string;
   chartData: { x: string; y: number }[];
 };
 
-const Chart: FC<TProps> = ({ label, chartData }) => {
+const Chart: FC<TProps> = ({ chartData }) => {
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   const data = {
     datasets: [
       {
-        label,
         data: chartData,
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
+        borderColor: "purple",
+        tension: 0.4,
       },
     ],
   };
 
-  return <Line data={data} />;
+  return <Line data={data} options={options} height="100%" />;
 };
 
 export { Chart };

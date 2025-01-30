@@ -35,7 +35,7 @@ export const getChartData = (data: IAssetHistory[], timeFrame: TimeFrame) => {
   const chartData =
     filteredData?.map((item) => ({
       x: dayjs(item.date).format(
-        timeFrame === TimeFrame.H24 ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD"
+        timeFrame === TimeFrame.H24 ? "HH:mm A" : "YYYY-MM-DD"
       ),
       y: parseFloat(item.priceUsd),
     })) || [];
