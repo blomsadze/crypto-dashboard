@@ -4,7 +4,9 @@ import Link from "next/link";
 
 const Breadcrumb = () => {
   const pathname = usePathname();
-  const pathSegments = pathname.split("/").filter((segment) => segment);
+  const pathSegments = pathname
+    .split("/")
+    .filter((segment) => segment !== "" && segment !== "assets");
 
   return (
     <nav className="text-gray-600 text-sm mb-6">
@@ -19,7 +21,9 @@ const Breadcrumb = () => {
           return (
             <li key={path} className="flex items-center font-bold space-x-2">
               <span>/</span>
-              <span className="text-yellow-600 capitalize">{segment}</span>
+              <span className="text-yellow-600 capitalize">
+                {encodeURIComponent(segment)}
+              </span>
             </li>
           );
         })}

@@ -28,7 +28,7 @@ const TableComponent = <T,>({
 
   return (
     <div className="overflow-x-auto w-full h-full">
-      <table className={classNames("w-full", className)}>
+      <table className={classNames("w-full h-full", className)}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

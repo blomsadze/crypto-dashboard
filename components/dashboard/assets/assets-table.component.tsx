@@ -83,8 +83,8 @@ const AssetsTable: FC<TProps> = ({ assetsData }) => {
               onShow={() => setVisibleTooltipRow(rowIndex)}
               onHide={() => setVisibleTooltipRow(null)}
             >
-              <Link href={`/assets/ ${row?.original?.id}?timeframe=24h`}>
-                <p className="text-yellow-400">
+              <Link href={`/assets/${row?.original?.id}?timeframe=24h`}>
+                <p className="text-yellow-400 lg:text-xl text-2xl cursor-pointer">
                   <FaChartBar />
                 </p>
               </Link>
