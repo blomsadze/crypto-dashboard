@@ -1,6 +1,6 @@
 import { AssetsTable } from "@/components/dashboard";
 import { PageTitle } from "@/components/common";
-import { fetchAssets } from "./actions/assets.action";
+import { fetchAssets } from "../actions/assets.action";
 
 const AssetsPage = async () => {
   const assetsData = await fetchAssets();

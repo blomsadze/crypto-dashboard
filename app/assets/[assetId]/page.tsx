@@ -18,13 +18,11 @@ const CurrentAssetPage: FC<TProps> = async ({ params, searchParams }) => {
 
   const assetsList = assetsData?.data || [];
 
-  // Check if the asset exists in the list of assets or set the default asset to bitcoin
+  // Check if the asset exists in the list of assets
   const assetId = assetsList?.find((item) => item.id === id)?.id || "bitcoin";
 
   const currentAsset = assetsList?.find((item) => item.id === assetId);
-  const assetTitle = currentAsset
-    ? `${currentAsset?.name} Price (${currentAsset?.symbol})`
-    : "Asset";
+  const assetTitle = `${currentAsset?.name} Price (${currentAsset?.symbol})`;
 
   // Check if the timeframe is valid or set the default timeframe to 24h
   const chartTimeFrame = Object.values(TimeFrame).includes(timeframe)
