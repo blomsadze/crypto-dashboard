@@ -32,9 +32,9 @@ const Input: FC<TInputProps> = ({
 }) => {
   const inputClasses = classNames(
     "w-full",
-    "rounded-2xl",
+    "rounded-md",
     "bg-gray-100",
-    "h-[44px]",
+    "h-[38px]",
     "px-8",
     "border",
     "leading-tight",
@@ -46,7 +46,7 @@ const Input: FC<TInputProps> = ({
       // error
       "border-red-600": !!error,
       // active
-      "border-transparent active:border-[#cfe0e2]": !error,
+      "border-gray-300 active:border-[#cfe0e2]": !error,
       // disabled
       "disabled:bg-zinc-100 disabled:text-zinc-400 disabled:border-none":
         !error,

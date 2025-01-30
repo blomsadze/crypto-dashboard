@@ -35,7 +35,7 @@ const CurrentAssetPage: FC<TProps> = async ({ params, searchParams }) => {
 
   return (
     <div className="flex justify-center gap-4">
-      <div className="lg:w-3f/6 fxl:w-4/6 fxxl:w-5/6 w-full">
+      <div className="w-full">
         <Breadcrumb />
         <PageTitle title={assetTitle} />
         <TimeFrameSelect selectedTimeframe={chartTimeFrame} />

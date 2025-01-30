@@ -1,7 +1,7 @@
 "use client";
 import React, { FC, useMemo } from "react";
 import { Chart } from "@/components/common";
-import { getChartData } from "@/utils/chart";
+import { getChartData } from "@/utils";
 import { TimeFrame } from "@/enums/index.enums";
 import { IAssetHistory } from "@/interfaces/assets.interface";
 

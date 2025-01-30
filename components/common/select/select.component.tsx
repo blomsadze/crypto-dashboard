@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
-import { SingleValue } from "react-select";
-import classNames from "classnames";
 import dynamic from "next/dynamic";
+
+import { GroupBase, SingleValue, StylesConfig } from "react-select";
+import classNames from "classnames";
 
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false,
@@ -35,14 +36,21 @@ const Select = ({
   options,
   ...props
 }: TSelectorProps) => {
+  const customStyles: StylesConfig<unknown, boolean, GroupBase<unknown>> = {
+    control: (provided) => ({
+      ...provided,
+      borderColor: error ? "red" : provided.borderColor,
+      "&:hover": {
+        borderColor: error ? "red" : provided.borderColor,
+      },
+    }),
+  };
+
   return (
     <div className={classNames("w-full", className)}>
       {label && (
         <label
-          className={classNames(
-            "input-label leading-tight",
-            error && "text-red-600 !opacity-100"
-          )}
+          className={classNames("input-label leading-tight")}
           htmlFor={label}
         >
           {label}
@@ -50,6 +58,7 @@ const Select = ({
       )}
       <ReactSelect
         className="react-select-styled react-select-solid"
+        styles={customStyles}
         classNamePrefix="react-select"
         menuPosition="fixed"
         menuPlacement="bottom"
