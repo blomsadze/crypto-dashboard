@@ -11,18 +11,15 @@ const Breadcrumb = () => {
       <ol className="flex space-x-2">
         <li>
           <Link href="/" className="hover:underline">
-            Home
+            <span className="font-bold">Home</span>
           </Link>
         </li>
         {pathSegments.map((segment, index) => {
           const path = "/" + pathSegments.slice(0, index + 1).join("/");
-
-          console.log("path", path);
-
           return (
-            <li key={path} className="flex items-center space-x-2">
+            <li key={path} className="flex items-center font-bold space-x-2">
               <span>/</span>
-              <span className="text-white capitalize">{segment}</span>
+              <span className="text-yellow-600 capitalize">{segment}</span>
             </li>
           );
         })}

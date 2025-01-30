@@ -50,7 +50,9 @@ const Select = ({
     <div className={classNames("w-full", className)}>
       {label && (
         <label
-          className={classNames("input-label leading-tight")}
+          className={classNames("input-label leading-tight", {
+            "text-red-600": error,
+          })}
           htmlFor={label}
         >
           {label}

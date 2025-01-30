@@ -51,9 +51,12 @@ const TableComponent = <T,>({
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="hover:bg-gray-800">
+            <tr
+              key={row.id}
+              className="bg-white mb-[0.62rem] hover:bg-gray-200 even:bg-transparent"
+            >
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="px-[6px] py-4 text-sm">
+                <td key={cell.id} className="px-[6px] py-3 text-sm">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

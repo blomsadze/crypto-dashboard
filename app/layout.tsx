@@ -26,7 +26,7 @@ export default function RootLayout({
         className={`${nunitoSans.className} flex flex-col items-center h-full w-full justify-center antialiased`}
       >
         <Header />
-        <div className="max-width px-5 lg:px-10 pt-20">{children}</div>
+        <div className="max-width px-4 pt-20">{children}</div>
       </body>
     </html>
   );

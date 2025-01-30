@@ -60,7 +60,7 @@ const Conversion: FC<TProps> = ({ assetsData }) => {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <div className="border lg:max-w-[32rem] w-full border-gray-600 rounded-lg shadow p-6">
+      <div className="lg:max-w-[32rem] w-full bg-white rounded-lg shadow p-6">
         {conversionResult?.total ? <ConversionResult /> : null}
         <ConversionForm onSubmit={handleSubmit} selectOptions={selectOptions} />
       </div>

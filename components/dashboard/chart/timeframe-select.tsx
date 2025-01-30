@@ -38,10 +38,10 @@ const TimeFrameSelect: FC<TProps> = ({ selectedTimeframe }) => {
           >
             <span
               className={classNames(
-                "uppercase hover:text-blue-500 font-semibold transition-colors lg:text-sm text-xs",
+                "uppercase hover:text-yellow-500 font-bold transition-colors lg:text-sm text-xs",
                 {
                   "cursor-pointer": true,
-                  "text-blue-500": selectedTimeframe === item.value,
+                  "text-yellow-400": selectedTimeframe === item.value,
                 }
               )}
             >

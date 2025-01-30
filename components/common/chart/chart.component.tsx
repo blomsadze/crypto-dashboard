@@ -40,7 +40,7 @@ const Chart: FC<TProps> = ({ chartData }) => {
       {
         data: chartData,
         fill: false,
-        borderColor: "purple",
+        borderColor: "#FACC15",
         tension: 0.4,
       },
     ],

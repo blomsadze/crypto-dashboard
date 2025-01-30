@@ -51,7 +51,12 @@ const ConversionForm: FC<TProps> = ({ selectOptions, onSubmit }) => {
           type="number"
           error={errors?.amount}
         />
-        <button type="submit">Submit</button>
+        <button
+          className="bg-yellow-400 h-12 text-white font-semibold rounded-lg"
+          type="submit"
+        >
+          Submit
+        </button>
       </div>
     </form>
   );

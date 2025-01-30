@@ -33,7 +33,6 @@ const Input: FC<TInputProps> = ({
   const inputClasses = classNames(
     "w-full",
     "rounded-md",
-    "bg-gray-100",
     "h-[38px]",
     "px-8",
     "border",
