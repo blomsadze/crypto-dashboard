@@ -50,6 +50,15 @@ const AssetsTable: FC<TProps> = ({ assetsData }) => {
         header: "Price",
         accessorKey: "price",
         size: 200,
+        sortingFn: (rowA, rowB) => {
+          const priceA = parseFloat(
+            realTimePrices[rowA.original.id] ?? rowA.original.priceUsd
+          );
+          const priceB = parseFloat(
+            realTimePrices[rowB.original.id] ?? rowB.original.priceUsd
+          );
+          return priceA - priceB;
+        },
         cell: (props) => {
           const price =
             realTimePrices[props.row.original.id] ??
