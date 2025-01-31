@@ -29,7 +29,7 @@ const Tooltip: React.FC<ITooltipProps> = ({
     >
       {children}
       {isVisible && (
-        <div className="absolute z-20 whitespace-nowrap bg-white text-black text-sm px-2 py-1 rounded shadow-lg top-full -translate-x-1/2 mt-2">
+        <div className="absolute hidden lg:block z-20 whitespace-nowrap bg-white text-black text-sm px-2 py-1 rounded shadow-lg top-full -translate-x-1/2 mt-2">
           {text}
         </div>
       )}
