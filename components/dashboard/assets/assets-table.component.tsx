@@ -10,20 +10,20 @@ import { useAssets } from "@/hooks/useAssets.hook";
 import { useAssetsStore } from "@/store/assets.store";
 import { useRealTimePrices } from "@/services/useRealTimePrices.service";
 import { IAsset } from "@/interfaces/assets.interface";
+import { IRate } from "@/interfaces/rates.interface";
 
 type TProps = {
   assetsData: IAsset[];
+  ratesData: IRate[];
 };
 
-const AssetsTable: FC<TProps> = ({ assetsData }) => {
+const AssetsTable: FC<TProps> = ({ assetsData, ratesData }) => {
   const [visibleTooltipRow, setVisibleTooltipRow] = useState<number | null>(
     null
   );
 
   const { assetsList, assetIds } = useAssetsStore();
-
   useAssets(assetsData);
-
   const realTimePrices = useRealTimePrices(assetIds);
 
   const columns: ColumnDef<IAsset>[] = useMemo(
@@ -47,7 +47,7 @@ const AssetsTable: FC<TProps> = ({ assetsData }) => {
         accessorKey: "symbol",
       },
       {
-        header: "Price",
+        header: "Price (USD)",
         accessorKey: "price",
         size: 200,
         sortingFn: (rowA, rowB) => {
@@ -81,6 +81,25 @@ const AssetsTable: FC<TProps> = ({ assetsData }) => {
         },
       },
       {
+        header: "Price (EUR)",
+        size: 200,
+        cell: (props) => {
+          const priceUsd = parseFloat(
+            realTimePrices[props.row.original.id] ?? props.row.original.priceUsd
+          );
+          const eurRateObj = ratesData?.find(
+            (rate) => rate.id.toLowerCase() === "euro"
+          );
+          const eurRate = eurRateObj ? parseFloat(eurRateObj.rateUsd) : 1;
+          const priceEur = priceUsd / eurRate;
+          return (
+            <div className="flex items-center gap-2">
+              <span className="text-nowrap">€ {priceEur.toFixed(2)}</span>
+            </div>
+          );
+        },
+      },
+      {
         header: "Actions",
         accessorKey: "id",
         cell: ({ row }) => {
@@ -102,7 +121,7 @@ const AssetsTable: FC<TProps> = ({ assetsData }) => {
         },
       },
     ],
-    [realTimePrices, visibleTooltipRow]
+    [realTimePrices, visibleTooltipRow, ratesData]
   );
 
   return (
