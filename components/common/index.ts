@@ -5,3 +5,4 @@ export * from "./chart";
 export * from "./tooltip";
 export * from "./breadcrumb";
 export * from "./page-title";
+export * from "./search";
