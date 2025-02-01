@@ -3,7 +3,7 @@ import {
   IConversionValidationError,
 } from "@/store/coversion.store";
 
-const validateConversion = (
+export const validateConversion = (
   amount: number | null,
   baseCrypto: string | null,
   targetCrypto: string | null
@@ -23,7 +23,7 @@ const validateConversion = (
   return errors;
 };
 
-const convertCrypto = (
+export const convertCrypto = (
   amount: number,
   baseCrypto: string,
   targetCrypto: string,
