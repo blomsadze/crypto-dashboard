@@ -82,7 +82,17 @@ const AssetsTable: FC<TProps> = ({ assetsData, ratesData }) => {
       },
       {
         header: "Price (EUR)",
+        accessorKey: "priceEur",
         size: 200,
+        sortingFn: (rowA, rowB) => {
+          const priceA = parseFloat(
+            realTimePrices[rowA.original.id] ?? rowA.original.priceUsd
+          );
+          const priceB = parseFloat(
+            realTimePrices[rowB.original.id] ?? rowB.original.priceUsd
+          );
+          return priceA - priceB;
+        },
         cell: (props) => {
           const priceUsd = parseFloat(
             realTimePrices[props.row.original.id] ?? props.row.original.priceUsd
@@ -102,6 +112,7 @@ const AssetsTable: FC<TProps> = ({ assetsData, ratesData }) => {
       {
         header: "Actions",
         accessorKey: "id",
+        enableSorting: false,
         cell: ({ row }) => {
           const rowIndex = row.index;
           return (

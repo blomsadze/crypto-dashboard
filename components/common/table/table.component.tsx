@@ -68,13 +68,14 @@ const TableComponent = <T,>({
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                      {header.column.getIsSorted() === "asc" ? (
-                        <FaSortUp className="text-blue-500" />
-                      ) : header.column.getIsSorted() === "desc" ? (
-                        <FaSortDown className="text-blue-500" />
-                      ) : (
-                        <FaSort className="text-gray-400" />
-                      )}
+                      {header.column.getCanSort() &&
+                        (header.column.getIsSorted() === "asc" ? (
+                          <FaSortUp className="text-blue-500" />
+                        ) : header.column.getIsSorted() === "desc" ? (
+                          <FaSortDown className="text-blue-500" />
+                        ) : (
+                          <FaSort className="text-gray-400" />
+                        ))}
                     </div>
                   )}
                 </th>
