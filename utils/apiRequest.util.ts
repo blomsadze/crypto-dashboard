@@ -28,7 +28,6 @@ export async function apiRequest<T>(
 
   requestConfig.params = queryParams;
 
-  // return axiosInstance(requestConfig).then((response) => response.data);
   return axiosInstance
     .request<T>(requestConfig)
     .then((response) => response.data);

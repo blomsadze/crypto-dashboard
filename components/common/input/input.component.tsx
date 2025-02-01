@@ -2,32 +2,25 @@ import React, { ChangeEvent, FC, HTMLProps } from "react";
 import classNames from "classnames";
 
 type TInputProps = {
-  id?: string;
   label?: string;
   name?: string;
   error?: string;
   value?: string | number;
   type?: string;
-  required?: boolean;
   containerClassName?: string;
   className?: string;
-  disabled?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 } & HTMLProps<HTMLInputElement>;
 
 const Input: FC<TInputProps> = ({
-  id,
   label = "",
   value,
   type = "text",
   name,
   onChange,
-  maxLength,
   className,
   containerClassName,
-  disabled,
   error,
-  required,
   ...props
 }) => {
   const inputClasses = classNames(
@@ -61,19 +54,16 @@ const Input: FC<TInputProps> = ({
           "leading-tight",
           !!error && "text-red-600 !opacity-100"
         )}
-        htmlFor={id}
+        htmlFor={label}
       >
         {label}
       </label>
       <input
-        required={required}
-        id={id}
+        id={label}
         className={classNames(inputClasses)}
         name={name}
-        disabled={disabled}
-        maxLength={maxLength}
         onWheel={(e) => (e.target as HTMLInputElement).blur()}
-        type={type === "password" ? "password" : type}
+        type={type}
         onChange={onChange}
         value={value || ""}
         {...props}
